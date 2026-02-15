@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo Network - AI Learning Companion | Limited Early Access</title>
+    <meta name="description" content="Neo Network: AI learning companion that teaches visually. Web3-powered platform. Limited lifetime access available.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght:400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0a0a0a;
+            --cyan: #00d9ff;
+            --cyan-dark: #00a8cc;
+            --cyan-glow: rgba(0, 217, 255, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border: rgba(0, 217, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated background */
+        .background-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 217, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Glow orbs */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--cyan);
+            top: -200px;
+            right: -200px;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--cyan);
+            bottom: -150px;
+            left: -150px;
+            animation: float 20s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -50px) scale(1.1); }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 40px 0;
+            text-align: center;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, var(--cyan) 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px var(--cyan-glow);
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            color: var(--cyan);
+            text-shadow: 0 0 20px var(--cyan-glow);
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        /* Video Container */
+        .video-container {
+            max-width: 600px;
+            margin: 60px auto;
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 50px var(--cyan-glow);
+            animation: fadeInUp 2s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 80px var(--cyan-glow);
+        }
+
+        .video-placeholder {
+            aspect-ratio: 9/16;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyan);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--cyan);
+        }
+
+        .feature-icon i {
+            text-shadow: 0 0 20px var(--cyan-glow);
+        }
+
+        .feature-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--cyan);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 20px;
+            color: var(--cyan);
+            text-shadow: 0 0 20px var(--cyan-glow);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            font-weight: 300;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 1s ease-out backwards;
+        }
+
+        .pricing-card:nth-child(1) { animation-delay: 0.1s; }
+        .pricing-card:nth-child(2) { animation-delay: 0.2s; }
+        .pricing-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .pricing-card.featured {
+            border-color: var(--cyan);
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px var(--cyan-glow);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--cyan);
+            box-shadow: 0 20px 60px var(--cyan-glow);
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--cyan);
+            color: var(--bg-primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .tier-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--cyan);
+        }
+
+        .tier-spots {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 20px 0;
+            color: var(--text-primary);
+        }
+
+        .price-currency {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            width: 100%;
+            padding: 15px 40px;
+            background: var(--cyan);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--cyan);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--cyan);
+            box-shadow: 0 0 30px var(--cyan-glow);
+            transform: scale(1.05);
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .features-list li {
+            padding: 10px 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--cyan);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin: 80px 0;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .benefits h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--cyan);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-item {
+            text-align: center;
+        }
+
+        .benefit-item h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+        }
+
+        .faq-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--cyan);
+        }
+
+        .faq-question {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--cyan);
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cyan);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .benefits {
+                padding: 40px 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="background-grid"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">NEO NETWORK</div>
+            <div class="tagline">AI LEARNING COMPANION</div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>
+                Learning Meets<br>
+                <span class="highlight">Visual Intelligence</span>
+            </h1>
+            <p>
+                Neo doesn't just answer questions. It teaches you with interactive visualizations, 
+                adaptive AI agents, and a glass board interface that makes complex topics crystal clear.
+            </p>
+        </div>
+    </section>
+
+    <!-- Video Demo -->
+    <div class="container">
+        <div class="video-container">
+            <div class="video-placeholder">
+                <div style="padding: 60px 40px; text-align: center;">
+                    <i class="fas fa-play-circle" style="font-size: 4rem; color: var(--cyan); margin-bottom: 20px;"></i>
+                    <h3 style="color: var(--text-primary); margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">Demo Video Coming Soon</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Watch Neo in action</p>
+                    <!-- TO ADD YOUR VIDEO: Replace this entire div with:
+                    <video controls style="width: 100%; height: 100%; object-fit: cover;">
+                        <source src="YOUR_VIDEO_URL_HERE.mp4" type="video/mp4">
+                    </video>
+                    OR embed from YouTube/Vimeo
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <section class="features container">
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fas fa-robot"></i></div>
+            <h3>Multi-Agent AI System</h3>
+            <p>Five specialized AI agents work together to ensure you actually understand, not just memorize.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fas fa-sparkles"></i></div>
+            <h3>Visual Glass Board</h3>
+            <p>Complex topics explained with interactive diagrams, animations, and holographic-style visuals.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fas fa-tools"></i></div>
+            <h3>Web3 Builder Tools</h3>
+            <p>Code, design, and deploy Web3 projects with AI assistance. From learning to building.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fas fa-moon"></i></div>
+            <h3>Autonomous Learning</h3>
+            <p>Neo works while you sleep. Wake up to summaries, flashcards, and practice questions.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fas fa-trophy"></i></div>
+            <h3>Reputation System</h3>
+            <p>Build projects, win hackathons, earn recognition. Prove your skills with on-chain reputation.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+            <h3>Community Platform</h3>
+            <p>Collaborate with builders, join challenges, and grow together in the Web3 ecosystem.</p>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section container reveal">
+        <h2 class="section-title">Limited Lifetime Access</h2>
+        <p class="section-subtitle">
+            First 50 users get lifetime access. No monthly fees. Ever.<br>
+            After launch: ₦10,000/month subscription.
+        </p>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="tier-name">TIER 1</div>
+                <div class="tier-spots">First 10 Spots</div>
+                <div class="price">
+                    <span class="price-currency">$</span>20
+                </div>
+                <div class="price-note">One-time payment • Auto-converts to your currency</div>
+                <ul class="features-list">
+                    <li>Lifetime access to Neo AI</li>
+                    <li>All NeoTools (when released)</li>
+                    <li>Future features included</li>
+                    <li>Founding member badge</li>
+                    <li>Priority support</li>
+                    <li>Early access to updates</li>
+                </ul>
+                <a href="#contact" class="cta-button">Secure Your Spot</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="badge">BEST VALUE</div>
+                <div class="tier-name">TIER 2</div>
+                <div class="tier-spots">Next 20 Spots</div>
+                <div class="price">
+                    <span class="price-currency">$</span>35
+                </div>
+                <div class="price-note">One-time payment • Auto-converts to your currency</div>
+                <ul class="features-list">
+                    <li>Lifetime access to Neo AI</li>
+                    <li>All NeoTools (when released)</li>
+                    <li>Future features included</li>
+                    <li>Founding member badge</li>
+                    <li>Priority support</li>
+                    <li>Early access to updates</li>
+                    <li>Bonus: Exclusive Discord role</li>
+                </ul>
+                <a href="#contact" class="cta-button">Secure Your Spot</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="tier-name">TIER 3</div>
+                <div class="tier-spots">Final 20 Spots</div>
+                <div class="price">
+                    <span class="price-currency">$</span>50
+                </div>
+                <div class="price-note">One-time payment • Auto-converts to your currency</div>
+                <ul class="features-list">
+                    <li>Lifetime access to Neo AI</li>
+                    <li>All NeoTools (when released)</li>
+                    <li>Future features included</li>
+                    <li>Founding member badge</li>
+                    <li>Priority support</li>
+                    <li>Early access to updates</li>
+                    <li>Bonus: Exclusive Discord role</li>
+                    <li>Bonus: Early hackathon access</li>
+                </ul>
+                <a href="#contact" class="cta-button">Secure Your Spot</a>
+            </div>
+        </div>
+
+        <p style="margin-top: 40px; color: var(--text-secondary);">
+            <i class="fas fa-clock" style="color: var(--cyan);"></i> Limited to 50 total spots across all tiers<br>
+            <i class="fas fa-calendar-alt" style="color: var(--cyan);"></i> Launching February 2026
+        </p>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits container reveal">
+        <h2>Why Lifetime Access?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <h3><i class="fas fa-money-bill-wave" style="color: var(--cyan); margin-right: 10px;"></i>Save Money</h3>
+                <p>$20 once vs $10/month forever = Break even in 2 months</p>
+            </div>
+            <div class="benefit-item">
+                <h3><i class="fas fa-lock" style="color: var(--cyan); margin-right: 10px;"></i>Lock In Price</h3>
+                <p>Never worry about price increases or subscription renewals</p>
+            </div>
+            <div class="benefit-item">
+                <h3><i class="fas fa-star" style="color: var(--cyan); margin-right: 10px;"></i>Founding Member</h3>
+                <p>Special status, recognition, and input on platform direction</p>
+            </div>
+            <div class="benefit-item">
+                <h3><i class="fas fa-infinity" style="color: var(--cyan); margin-right: 10px;"></i>All Future Features</h3>
+                <p>Every new tool, update, and capability - yours forever</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq container reveal">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">When does Neo Network launch?</div>
+            <div class="faq-answer">
+                We're launching in February 2026. Lifetime access holders will get early access before the public launch.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What happens if I don't like it?</div>
+            <div class="faq-answer">
+                We offer a 30-day money-back guarantee after launch. If Neo doesn't meet your expectations, full refund - no questions asked.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Is this really lifetime access?</div>
+            <div class="faq-answer">
+                Yes. Pay once, use forever. You'll get access to all current and future features with no additional charges.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What subjects can Neo help with?</div>
+            <div class="faq-answer">
+                Neo can explain any topic - from Web3 and blockchain to physics, coding, business, languages, and more. If you can learn it, Neo can teach it.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How do I secure my spot?</div>
+            <div class="faq-answer">
+                Click "Secure Your Spot" on any tier above, and you'll receive payment instructions. Once payment is confirmed, your lifetime access is locked in.
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/CTA Section -->
+    <section id="contact" class="hero reveal">
+        <div class="container">
+            <h2 class="section-title">Ready to Join?</h2>
+            <p style="max-width: 600px; margin: 20px auto 40px; color: var(--text-secondary);">
+                DM us on X/Twitter <strong style="color: var(--cyan);">@NeoNet396112</strong><br>
+                or email <strong style="color: var(--cyan);">neonetnnetofficial@gmail.com</strong><br><br>
+                Include your preferred tier and we'll send payment details.
+            </p>
+            <a href="https://twitter.com/NeoNet396112" target="_blank" class="cta-button" style="max-width: 300px; margin: 0 auto; display: block;">
+                Contact Us on X
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">NEO NETWORK</div>
+            <div class="footer-links">
+                <a href="https://twitter.com/NeoNet396112" target="_blank">Twitter</a>
+                <a href="#" target="_blank">Discord</a>
+                <a href="#" target="_blank">Telegram</a>
+            </div>
+            <p class="copyright">
+                © 2026 Neo Network. All rights reserved.<br>
+                Building the future of AI-powered learning.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Paystack Payment Script -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    
+    <!-- Scroll Reveal Script -->
+    <script>
+        // ==========================================
+        // PAYMENT CONFIGURATION
+        // ==========================================
+        
+        // TODO: Replace with your actual Paystack public key
+        const PAYSTACK_PUBLIC_KEY = 'pk_test_5f5dfe90d7abdb632c81d'; // Get from https://dashboard.paystack.com/#/settings/developer
+        
+        // TODO: Replace with your email
+        const YOUR_EMAIL = 'neonetnnetofficial@gmail.com';
+        
+        // Track spots sold (update these manually as you sell)
+        let tier1Sold = 0; // First 10 spots
+        let tier2Sold = 0; // Next 20 spots  
+        let tier3Sold = 0; // Final 20 spots
+        
+        // Pricing tiers in USD (Paystack auto-converts to user's local currency)
+        const TIERS = {
+            tier1: {
+                name: 'Tier 1 - First 10 Spots',
+                price: 20 * 100, // $20 in cents
+                maxSpots: 10,
+                sold: tier1Sold
+            },
+            tier2: {
+                name: 'Tier 2 - Next 20 Spots',
+                price: 35 * 100, // $35 in cents
+                maxSpots: 20,
+                sold: tier2Sold
+            },
+            tier3: {
+                name: 'Tier 3 - Final 20 Spots',
+                price: 50 * 100, // $50 in cents
+                maxSpots: 20,
+                sold: tier3Sold
+            }
+        };
+
+        // ==========================================
+        // PAYMENT FUNCTIONS
+        // ==========================================
+        
+        function initializePayment(tier) {
+            const tierInfo = TIERS[tier];
+            
+            // Check if tier is sold out
+            if (tierInfo.sold >= tierInfo.maxSpots) {
+                alert(`Sorry! ${tierInfo.name} is sold out. Please choose another tier.`);
+                return;
+            }
+            
+            // Collect user info
+            const email = prompt(`Enter your email address:\n\nYou'll be paying $${tierInfo.price/100} (auto-converts to your local currency)`);
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            const name = prompt('Enter your full name:');
+            if (!name || name.trim() === '') {
+                alert('Please enter your name.');
+                return;
+            }
+            
+            // Initialize Paystack payment (USD auto-converts to user's currency)
+            const handler = PaystackPop.setup({
+                key: PAYSTACK_PUBLIC_KEY,
+                email: email,
+                amount: tierInfo.price,
+                currency: 'USD', // Paystack auto-converts to user's local currency
+                ref: 'NEO_' + tier.toUpperCase() + '_' + Math.floor((Math.random() * 1000000000) + 1),
+                metadata: {
+                    custom_fields: [
+                        {
+                            display_name: "Tier",
+                            variable_name: "tier",
+                            value: tierInfo.name
+                        },
+                        {
+                            display_name: "Customer Name",
+                            variable_name: "customer_name",
+                            value: name
+                        }
+                    ]
+                },
+                callback: function(response) {
+                    // Payment successful
+                    alert('Payment successful! Reference: ' + response.reference + 
+                          '\n\nWelcome to Neo Network! Check your email for confirmation and next steps.');
+                    
+                    // Send confirmation email (you'll need to set up a backend for this)
+                    sendConfirmationEmail(email, name, tier, response.reference);
+                    
+                    // Redirect to success page or Discord
+                    setTimeout(() => {
+                        window.location.href = '#success';
+                    }, 2000);
+                },
+                onClose: function() {
+                    alert('Payment cancelled. Click the button again when ready to continue.');
+                }
+            });
+            
+            handler.openIframe();
+        }
+        
+        // Send confirmation (this is a placeholder - you'll need a backend)
+        function sendConfirmationEmail(email, name, tier, reference) {
+            // TODO: Set up a simple backend (Netlify Functions, Vercel Functions, or EmailJS)
+            // to send confirmation emails
+            
+            console.log('Confirmation details:', {
+                email: email,
+                name: name,
+                tier: tier,
+                reference: reference
+            });
+            
+            // For now, just log to console
+            // Later: Call your backend API to send email
+        }
+        
+        // ==========================================
+        // ALTERNATIVE: CONTACT FORM FOR MANUAL PAYMENT
+        // ==========================================
+        
+        function showContactForm(tier) {
+            const tierInfo = TIERS[tier];
+            const tierPriceNGN = tierInfo.priceNGN / 100; // Convert kobo to naira
+            const tierPriceUSD = tierInfo.priceUSD / 100; // Convert cents to dollars
+            
+            // Option 3: Show bank details modal
+            alert(`To secure ${tierInfo.name}:\n\n` +
+                  `OPTION 1: PAY IN NAIRA (₦${tierPriceNGN.toLocaleString()})\n` +
+                  `Transfer to:\n` +
+                  `   Bank: Palmpay\n` +
+                  `   Account: 8144668891\n` +
+                  `   Name: JAPHET EPAMOWEI AZEBIRI\n\n` +
+                  `OPTION 2: PAY IN DOLLARS ($${tierPriceUSD})\n` +
+                  `DM us on X @NeoNet396112 for USD payment details\n\n` +
+                  `After payment:\n` +
+                  `   - Screenshot of payment\n` +
+                  `   - Your email\n` +
+                  `   - Your name\n` +
+                  `DM: @NeoNet396112\n\n` +
+                  `We'll confirm within 24 hours!`);
+        }
+
+        // ==========================================
+        // PAGE ANIMATIONS & INTERACTIONS
+        // ==========================================
+        
+        // Scroll reveal animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal(); // Check on page load
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href !== '#contact') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Update spot counter
+        const updateSpotCounter = () => {
+            console.log(`Spots remaining: Tier 1: ${10-tier1Sold}, Tier 2: ${20-tier2Sold}, Tier 3: ${20-tier3Sold}`);
+            
+            // TODO: You can update the UI to show remaining spots
+            // Example: document.querySelector('.tier1-spots').textContent = `${10-tier1Sold} spots left`;
+        };
+
+        updateSpotCounter();
+        
+        // ==========================================
+        // INITIALIZE PAYMENT BUTTONS
+        // ==========================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all payment buttons
+            const paymentButtons = document.querySelectorAll('.cta-button');
+            
+            paymentButtons.forEach((button, index) => {
+                // Skip the contact button (last one)
+                if (index >= 3) return;
+                
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Determine which tier based on button position
+                    let tier = '';
+                    if (index === 0) tier = 'tier1';
+                    else if (index === 1) tier = 'tier2';
+                    else if (index === 2) tier = 'tier3';
+                    
+                    // Open Paystack payment directly
+                    initializePayment(tier);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
